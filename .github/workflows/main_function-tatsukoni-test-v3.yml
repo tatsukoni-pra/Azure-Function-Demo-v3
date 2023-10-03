@@ -12,6 +12,8 @@ on:
 env:
   AZURE_FUNCTIONAPP_PACKAGE_PATH: '.' # set this to the path to your web app project, defaults to the repository root
   NODE_VERSION: '18.x' # set this to the node version to use (supports 8.x, 10.x, 12.x)
+  RESOURCE_GROUP_NAME: 'tatsukoni-test-v1'
+  FUNCTION_NAME: 'function-tatsukoni-test-v3'
 
 jobs:
   build-and-deploy:
@@ -19,6 +21,11 @@ jobs:
     steps:
       - name: 'Checkout GitHub Action'
         uses: actions/checkout@v2
+
+      - name: 'Login via Azure CLI'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS_FUNCTION_DEMO_V3 }}
 
       - name: Setup Node ${{ env.NODE_VERSION }} Environment
         uses: actions/setup-node@v1
@@ -42,3 +49,12 @@ jobs:
           slot-name: 'staging'
           package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8DF5DC8F7C8448189F86C85F569C57FB }}
+
+      - name: 'Swap Azure Function To Production'
+        id: slot_swap
+        run: |
+          az webapp deployment slot swap \
+            --resource-group ${{ env.RESOURCE_GROUP_NAME }} \
+            --name ${{ env.FUNCTION_NAME }} \
+            --slot staging \
+            --target-slot Production

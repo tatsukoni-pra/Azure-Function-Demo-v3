@@ -25,7 +25,7 @@ async function addItem(item: any) {
 }
 
 export async function timerTrigger1(myTimer: Timer, context: InvocationContext): Promise<void> {
-    context.log('Start timer trigger function');
+    context.log('Start timer trigger function v3');
 
     const recordId = generateRandomNumber().toString();
     context.log('Item will creat with id: ' + recordId);

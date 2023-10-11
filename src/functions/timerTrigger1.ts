@@ -30,32 +30,32 @@ export async function timerTrigger1(myTimer: Timer, context: InvocationContext):
     const recordId = generateRandomNumber().toString();
     context.log('Item will creat with id: ' + recordId);
 
-    // 1分50秒待機
-    await sleep(110000);
+    // 3分40秒待機
+    await sleep(220000);
 
     // DBレコード作成
-    const timeStamp = getJSTISOString();
-    const createItem = {
-        id: recordId,
-        user: {
-            id: "1",
-            name: "user_1"
-        },
-        text: "2023-10-11 Timer trigger function run! " + timeStamp
-    };
-    addItem(createItem)
-        .then(createdItem => {
-            console.log(`Item created with id: ${createdItem.id}`);
-        })
-        .catch(error => {
-            console.error("Error creating item:", error);
-        });
+    // const timeStamp = getJSTISOString();
+    // const createItem = {
+    //     id: recordId,
+    //     user: {
+    //         id: "1",
+    //         name: "user_1"
+    //     },
+    //     text: "2023-10-11 Timer trigger function run! " + timeStamp
+    // };
+    // addItem(createItem)
+    //     .then(createdItem => {
+    //         console.log(`Item created with id: ${createdItem.id}`);
+    //     })
+    //     .catch(error => {
+    //         console.error("Error creating item:", error);
+    //     });
 
     context.log('Item created with id:' + recordId);
     context.log('Finish timer trigger function v3');
 }
 
 app.timer('timerTrigger1', {
-    schedule: '0 */2 * * * *',
+    schedule: '0 */4 * * * *',
     handler: timerTrigger1
 });

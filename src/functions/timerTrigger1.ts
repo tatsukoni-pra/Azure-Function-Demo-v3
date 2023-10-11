@@ -38,7 +38,7 @@ export async function timerTrigger1(myTimer: Timer, context: InvocationContext):
             id: "1",
             name: "user_1"
         },
-        text: "2023-10-11 New Timer trigger function 2 run! " + timeStamp
+        text: "2023-10-11 Timer trigger function run! " + timeStamp
     };
     addItem(createItem)
         .then(createdItem => {

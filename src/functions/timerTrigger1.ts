@@ -27,13 +27,16 @@ async function addItem(item: any) {
 export async function timerTrigger1(myTimer: Timer, context: InvocationContext): Promise<void> {
     context.log('Start timer trigger function');
 
+    const recordId = generateRandomNumber().toString();
+    context.log('Item will creat with id: ' + recordId);
+
     // 1分50秒待機
     await sleep(110000);
 
     // DBレコード作成
     const timeStamp = getJSTISOString();
     const createItem = {
-        id: generateRandomNumber().toString(),
+        id: recordId,
         user: {
             id: "1",
             name: "user_1"
@@ -48,6 +51,7 @@ export async function timerTrigger1(myTimer: Timer, context: InvocationContext):
             console.error("Error creating item:", error);
         });
 
+    context.log('Item created with id:' + recordId);
     context.log('Finish timer trigger function v3');
 }
 

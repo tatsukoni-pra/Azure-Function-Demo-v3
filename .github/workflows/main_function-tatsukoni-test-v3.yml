@@ -14,6 +14,7 @@ env:
   NODE_VERSION: '18.x' # set this to the node version to use (supports 8.x, 10.x, 12.x)
   RESOURCE_GROUP_NAME: 'tatsukoni-test-v1'
   FUNCTION_NAME: 'function-tatsukoni-test-v3'
+  SLOT_NAME: 'staging'
 
 jobs:
   build-and-deploy-staging:
@@ -27,7 +28,7 @@ jobs:
       - name: 'Login via Azure CLI'
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS_GROUP_TEST_V1 }}
+          creds: ${{ secrets.AZURE_CREDENTIALS_FUNCTION_DEMO_V3 }}
 
       - name: Setup Node ${{ env.NODE_VERSION }} Environment
         uses: actions/setup-node@v1
@@ -48,7 +49,7 @@ jobs:
         id: fa
         with:
           app-name: ${{ env.FUNCTION_NAME }}
-          slot-name: 'staging'
+          slot-name: ${{ env.SLOT_NAME }}
           package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
 
       - name: 'Swap Azure Function To Production'
@@ -56,7 +57,7 @@ jobs:
           az webapp deployment slot swap \
             --resource-group ${{ env.RESOURCE_GROUP_NAME }} \
             --name ${{ env.FUNCTION_NAME }} \
-            --slot staging
+            --slot ${{ env.SLOT_NAME }}
 
       - name: 'Logout via Azure CLI'
         run: |

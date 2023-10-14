@@ -53,6 +53,7 @@ jobs:
           package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
 
       - name: 'Swap Azure Function To Production'
+        id: slot_swap
         run: |
           az webapp deployment slot swap \
             --resource-group ${{ env.RESOURCE_GROUP_NAME }} \
@@ -62,25 +63,3 @@ jobs:
       - name: 'Logout via Azure CLI'
         run: |
           az logout
-
-  # deploy-production:
-  #   needs: build-and-deploy-staging
-  #   runs-on: ubuntu-latest
-  #   timeout-minutes: 5
-
-  #   steps:
-  #     - name: 'Login via Azure CLI'
-  #       uses: azure/login@v1
-  #       with:
-  #         creds: ${{ secrets.AZURE_CREDENTIALS_FUNCTION_DEMO_V3 }}
-
-  #     - name: 'Swap Azure Function To Production'
-  #       run: |
-  #         az webapp deployment slot swap \
-  #           --resource-group ${{ env.RESOURCE_GROUP_NAME }} \
-  #           --name ${{ env.FUNCTION_NAME }} \
-  #           --slot staging
-
-  #     - name: 'Logout via Azure CLI'
-  #       run: |
-  #         az logout

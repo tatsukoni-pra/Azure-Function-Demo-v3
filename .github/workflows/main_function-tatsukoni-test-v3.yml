@@ -49,6 +49,7 @@ jobs:
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8DF5DC8F7C8448189F86C85F569C57FB }}
 
   swap-production:
+    needs: build-and-deploy-staging
     runs-on: ubuntu-latest
     timeout-minutes: 10
 

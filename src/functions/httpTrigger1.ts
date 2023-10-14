@@ -5,7 +5,7 @@ export async function httpTrigger1(request: HttpRequest, context: InvocationCont
 
     const name = request.query.get('name') || await request.text() || 'world';
 
-    return { body: `Hello v3, ${name}!` };
+    return { body: `Hello 3, ${name}!` };
 };
 
 app.http('httpTrigger1', {

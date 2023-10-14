@@ -25,11 +25,6 @@ jobs:
       - name: 'Checkout GitHub Action'
         uses: actions/checkout@v2
 
-      - name: 'Login via Azure CLI'
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS_FUNCTION_DEMO_V3 }}
-
       - name: Setup Node ${{ env.NODE_VERSION }} Environment
         uses: actions/setup-node@v1
         with:
@@ -51,6 +46,17 @@ jobs:
           app-name: ${{ env.FUNCTION_NAME }}
           slot-name: ${{ env.SLOT_NAME }}
           package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8DF5DC8F7C8448189F86C85F569C57FB }}
+
+  swap-production:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: 'Login via Azure CLI'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS_FUNCTION_DEMO_V3 }}
 
       - name: 'Swap Azure Function To Production'
         id: slot_swap

@@ -27,7 +27,7 @@ jobs:
       - name: 'Login via Azure CLI'
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS_FUNCTION_DEMO_V3 }}
+          creds: ${{ secrets.AZURE_CREDENTIALS_GROUP_TEST_V1 }}
 
       - name: Setup Node ${{ env.NODE_VERSION }} Environment
         uses: actions/setup-node@v1

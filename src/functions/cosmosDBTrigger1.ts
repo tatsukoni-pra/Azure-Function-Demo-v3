@@ -37,14 +37,14 @@ export async function cosmosDBTrigger1(documents: unknown[], context: Invocation
     await sleep(220000);
 
     // DBレコード更新
-    const operations: PatchOperation[] = [
-        {
-            op: "replace", // replace operation を使用
-            path: "/text", // 更新するプロパティのパス
-            value: functionVersion + "-" + functionExecId + "-" + getJSTISOString()
-        }
-    ];
-    const { resource: updateItem } = await container.item("2", "2").patch(operations);
+    // const operations: PatchOperation[] = [
+    //     {
+    //         op: "replace", // replace operation を使用
+    //         path: "/text", // 更新するプロパティのパス
+    //         value: functionVersion + "-" + functionExecId + "-" + getJSTISOString()
+    //     }
+    // ];
+    // const { resource: updateItem } = await container.item("2", "2").patch(operations);
 
     // 完了
     context.log(`Finished Function Exec Id: ${functionExecId}`);

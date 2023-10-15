@@ -53,7 +53,7 @@ export async function cosmosDBTrigger1(documents: unknown[], context: Invocation
 }
 
 app.cosmosDB('cosmosDBTrigger1', {
-    connectionStringSetting: 'COSMOSDB_CONNECTION_STRING',
+    connectionStringSetting: 'COSMOSDB_LEASE_CONNECTION_STRING',
     databaseName: 'TatsukoniTest',
     collectionName: 'tatsukoni-test-1',
     createLeaseCollectionIfNotExists: true,

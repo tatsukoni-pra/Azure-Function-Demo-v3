@@ -44,7 +44,7 @@ export async function cosmosDBTrigger1(documents: unknown[], context: Invocation
             value: functionVersion + "-" + functionExecId + "-" + getJSTISOString()
         }
     ];
-    const { resource: updateItem } = await container.item(targetId, targetKey).patch(operations);
+    const { resource: updateItem } = await container.item("2", "2").patch(operations);
 
     // 完了
     context.log(`Finished Function Exec Id: ${functionExecId}`);

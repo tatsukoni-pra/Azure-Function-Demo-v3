@@ -48,6 +48,8 @@ export async function cosmosDBTrigger1(documents: unknown[], context: Invocation
 
     // 完了
     context.log(`Finished Function Exec Id: ${functionExecId}`);
+    await sleep(3000);
+    context.log('Finished!!');
 }
 
 app.cosmosDB('cosmosDBTrigger1', {

@@ -57,6 +57,6 @@ export async function timerTrigger1(myTimer: Timer, context: InvocationContext):
 }
 
 app.timer('timerTrigger1', {
-    schedule: '0 */4 * * * *',
+    schedule: '0 */12 * * * *',
     handler: timerTrigger1
 });

@@ -12,7 +12,7 @@ const generateRandomNumber: () => number = () => {
 }
 
 export async function cosmosDBTrigger1(documents: unknown[], context: InvocationContext): Promise<void> {
-    const functionVersion = "v3-10";
+    const functionVersion = "v3-11";
     const functionExecId = generateRandomNumber().toString();
     const documentsCount = documents.length;
     if (documentsCount === 0) {

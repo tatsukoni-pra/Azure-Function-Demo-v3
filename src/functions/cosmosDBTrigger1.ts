@@ -6,20 +6,13 @@ const container = client.database("TatsukoniTest").container("tatsukoni-test-1")
 
 const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
-const getJSTISOString = () => {
-    const now = new Date();
-    // UTC時間に9時間加算してJSTに変換
-    now.setHours(now.getUTCHours() + 9);
-    return now.toISOString().replace('Z', '+09:00');  // タイムゾーンオフセットを'+09:00'に修正
-};
-
 const generateRandomNumber: () => number = () => {
     // 3から9999999までのランダムな数値を返す
     return Math.floor(Math.random() * (9999999 - 3 + 1)) + 3;
 }
 
 export async function cosmosDBTrigger1(documents: unknown[], context: InvocationContext): Promise<void> {
-    const functionVersion = "v3-8";
+    const functionVersion = "v3-9";
     const functionExecId = generateRandomNumber().toString();
     const documentsCount = documents.length;
     if (documentsCount === 0) {
@@ -42,16 +35,6 @@ export async function cosmosDBTrigger1(documents: unknown[], context: Invocation
     context.log('2分30秒経過...');
     await sleep(60000);
     context.log('3分30秒経過');
-
-    // DBレコード更新
-    // const operations: PatchOperation[] = [
-    //     {
-    //         op: "replace", // replace operation を使用
-    //         path: "/text", // 更新するプロパティのパス
-    //         value: functionVersion + "-" + functionExecId + "-" + getJSTISOString() // 更新する値
-    //     }
-    // ];
-    // const { resource: updateItem } = await container.item("2", "2").patch(operations);
 
     // 完了
     context.log(`Finished Function Exec Id: ${functionExecId}`);

@@ -12,7 +12,7 @@ const generateRandomNumber: () => number = () => {
 }
 
 export async function cosmosDBTrigger1(documents: unknown[], context: InvocationContext): Promise<void> {
-    const functionVersion = "v3-12";
+    const functionVersion = "v3-13";
     const functionExecId = generateRandomNumber().toString();
     const documentsCount = documents.length;
     if (documentsCount === 0) {
@@ -20,6 +20,13 @@ export async function cosmosDBTrigger1(documents: unknown[], context: Invocation
         return;
     }
     context.log(`Function Version: ${functionVersion} Processed documents: ${documentsCount} Function Exec Id: ${functionExecId}`);
+
+    if (process.env["env"] === "prod") {
+        context.log('Execute Production Slot.')
+    }
+    if (process.env["env"] === "staging") {
+        context.log('Execute Staging Slot.')
+    }
 
     // 実行対象を取得
     const targetId = (documents[0] as any).id;

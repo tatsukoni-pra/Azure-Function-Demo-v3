@@ -33,15 +33,13 @@ export async function cosmosDBTrigger1(documents: unknown[], context: Invocation
     const targetKey = (documents[0] as any).user.id;
     context.log(`targetId: ${targetId}, targetKey: ${targetKey}`);
 
-    // 3分30秒待機
+    // 1分30秒待機
     await sleep(30000);
     context.log('30秒経過...');
-    await sleep(60000);
+    await sleep(30000);
+    context.log('1分経過...');
+    await sleep(30000);
     context.log('1分30秒経過...');
-    await sleep(60000);
-    context.log('2分30秒経過...');
-    await sleep(60000);
-    context.log('3分30秒経過');
 
     // DBレコード更新
     // const operations: PatchOperation[] = [

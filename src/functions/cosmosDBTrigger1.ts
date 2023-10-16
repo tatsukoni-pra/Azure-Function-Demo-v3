@@ -19,7 +19,7 @@ const generateRandomNumber: () => number = () => {
 }
 
 export async function cosmosDBTrigger1(documents: unknown[], context: InvocationContext): Promise<void> {
-    const functionVersion = "v3-4";
+    const functionVersion = "v3-5";
     const functionExecId = generateRandomNumber().toString();
     const documentsCount = documents.length;
     if (documentsCount === 0) {
@@ -33,13 +33,15 @@ export async function cosmosDBTrigger1(documents: unknown[], context: Invocation
     const targetKey = (documents[0] as any).user.id;
     context.log(`targetId: ${targetId}, targetKey: ${targetKey}`);
 
-    // 1分30秒待機
+    // 3分30秒待機
     await sleep(30000);
     context.log('30秒経過...');
-    await sleep(30000);
-    context.log('1分経過...');
-    await sleep(30000);
+    await sleep(60000);
     context.log('1分30秒経過...');
+    await sleep(60000);
+    context.log('2分30秒経過...');
+    await sleep(60000);
+    context.log('3分30秒経過');
 
     // DBレコード更新
     // const operations: PatchOperation[] = [

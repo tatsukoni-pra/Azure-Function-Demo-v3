@@ -57,13 +57,13 @@ process.on('uncaughtException', async () => {
 });
 
 export async function cosmosDBTrigger1(documents: unknown[], context: InvocationContext): Promise<void> {
-    context.log('リトライ回数: ' + context.retryContext.retryCount);
-    context.log('最大リトライ回数: ' + context.retryContext.maxRetryCount);
-    context.log('リトライ原因' + context.retryContext.exception);
+    context.log(`リトライ回数: ${context.retryContext.retryCount}`);
+    context.log(`最大リトライ回数: ${context.retryContext.maxRetryCount}`);
+    context.log(`リトライ原因: ${context.retryContext.exception.message}`);
 
     globalContext = context;
     try {
-        const functionVersion = "v3-21";
+        const functionVersion = "v3-22";
         const functionExecId = generateRandomNumber().toString();
         const documentsCount = documents.length;
         if (documentsCount === 0) {

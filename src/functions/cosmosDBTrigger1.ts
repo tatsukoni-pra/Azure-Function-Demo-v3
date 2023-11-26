@@ -5,6 +5,18 @@ let globalContext: InvocationContext | null = null;
 const client = new CosmosClient(process.env["COSMOSDB_CONNECTION_STRING"]);
 const container = client.database("TatsukoniTest").container("tatsukoni-test-1");
 
+const outputRetry = (context: InvocationContext) => {
+    if (context.retryContext) {
+        context.log(`リトライ回数: ${context.retryContext.retryCount}`);
+        context.log(`最大リトライ回数: ${context.retryContext.maxRetryCount}`);
+        if (context.retryContext.exception) {
+            context.log(`リトライ原因: ${context.retryContext.exception.message}`);
+        }
+    } else {
+        context.log(`リトライ回数: 0`);
+    }
+}
+
 const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 const generateRandomNumber: () => number = () => {
@@ -57,13 +69,9 @@ process.on('uncaughtException', async () => {
 });
 
 export async function cosmosDBTrigger1(documents: unknown[], context: InvocationContext): Promise<void> {
-    context.log(`リトライ回数: ${context.retryContext.retryCount}`);
-    context.log(`最大リトライ回数: ${context.retryContext.maxRetryCount}`);
-    if (context.retryContext.exception) {
-        context.log(`リトライ原因: ${context.retryContext.exception.message}`);
-    }
-
+    await outputRetry(context);
     globalContext = context;
+
     try {
         const functionVersion = "v3-22";
         const functionExecId = generateRandomNumber().toString();

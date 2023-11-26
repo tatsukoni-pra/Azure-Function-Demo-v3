@@ -1,6 +1,7 @@
 import { CosmosClient, PatchOperation } from "@azure/cosmos";
 import { app, InvocationContext } from "@azure/functions";
 
+let globalContext: InvocationContext | null = null;
 const client = new CosmosClient(process.env["COSMOSDB_CONNECTION_STRING"]);
 const container = client.database("TatsukoniTest").container("tatsukoni-test-1");
 
@@ -11,7 +12,19 @@ const generateRandomNumber: () => number = () => {
     return Math.floor(Math.random() * (9999999 - 3 + 1)) + 3;
 }
 
+process.on('SIGTERM', async () => {
+  if (globalContext) {
+    globalContext.log('処理が中断されました。');
+    // ここにクリーンアップ処理を追加します。
+    // 例: データベースのクローズ、ファイルの保存など
+  }
+
+  // 必要なクリーンアップ処理が完了したら、プロセスを終了します。
+  process.exit(0);
+});
+
 export async function cosmosDBTrigger1(documents: unknown[], context: InvocationContext): Promise<void> {
+    globalContext = context;
     try {
         const functionVersion = "v3-15";
         const functionExecId = generateRandomNumber().toString();

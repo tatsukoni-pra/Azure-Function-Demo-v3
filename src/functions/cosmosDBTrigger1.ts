@@ -13,15 +13,15 @@ const generateRandomNumber: () => number = () => {
 }
 
 process.on('SIGKILL', async () => {
-    if (globalContext) {
-      globalContext.log('処理が強制終了されました。');
-      // ここにクリーンアップ処理を追加します。
-      // 例: データベースのクローズ、ファイルの保存など
-    }
-  
-    // 必要なクリーンアップ処理が完了したら、プロセスを終了します。
-    process.exit(0);
-  });
+  if (globalContext) {
+    globalContext.log('処理が強制終了されました。');
+    // ここにクリーンアップ処理を追加します。
+    // 例: データベースのクローズ、ファイルの保存など
+  }
+
+  // 必要なクリーンアップ処理が完了したら、プロセスを終了します。
+  process.exit(0);
+});
 
 process.on('SIGTERM', async () => {
   if (globalContext) {

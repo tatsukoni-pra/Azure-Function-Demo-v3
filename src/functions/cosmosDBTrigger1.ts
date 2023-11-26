@@ -12,41 +12,39 @@ const generateRandomNumber: () => number = () => {
 }
 
 export async function cosmosDBTrigger1(documents: unknown[], context: InvocationContext): Promise<void> {
-    const functionVersion = "v3-15";
-    const functionExecId = generateRandomNumber().toString();
-    const documentsCount = documents.length;
-    if (documentsCount === 0) {
-        context.log('Skip cosmosDBTrigger1 function because documents is empty.')
-        return;
+    try {
+        const functionVersion = "v3-15";
+        const functionExecId = generateRandomNumber().toString();
+        const documentsCount = documents.length;
+        if (documentsCount === 0) {
+            context.log('Skip cosmosDBTrigger1 function because documents is empty.')
+            return;
+        }
+        context.log(`Function Version: ${functionVersion} Processed documents: ${documentsCount} Function Exec Id: ${functionExecId}`);
+
+        // 実行対象を取得
+        const targetId = (documents[0] as any).id;
+        const targetKey = (documents[0] as any).user.id;
+        context.log(`targetId: ${targetId}, targetKey: ${targetKey}`);
+
+        // 3分30秒待機
+        await sleep(30000);
+        context.log('30秒経過...');
+        await sleep(60000);
+        context.log('1分30秒経過...');
+        await sleep(60000);
+        context.log('2分30秒経過...');
+        await sleep(60000);
+        context.log('3分30秒経過');
+
+        // 完了
+        context.log(`Finished Function Exec Id: ${functionExecId}`);
+        context.log('Finished!!!');
+    } catch (error: any) {
+        context.log('エラーが発生しました。');
+        context.log(error);
+        // throw error;
     }
-    context.log(`Function Version: ${functionVersion} Processed documents: ${documentsCount} Function Exec Id: ${functionExecId}`);
-
-    if (process.env["env"] === "prod") {
-        context.log('Execute Production Slot.')
-    }
-    if (process.env["env"] === "staging") {
-        context.log('Execute Staging Slot.')
-    }
-
-    // 実行対象を取得
-    const targetId = (documents[0] as any).id;
-    const targetKey = (documents[0] as any).user.id;
-    context.log(`targetId: ${targetId}, targetKey: ${targetKey}`);
-
-    // 3分30秒待機
-    await sleep(30000);
-    context.log('30秒経過...');
-    await sleep(60000);
-    context.log('1分30秒経過...');
-    await sleep(60000);
-    context.log('2分30秒経過...');
-    await sleep(60000);
-    context.log('3分30秒経過');
-
-    // 完了
-    context.log(`Finished Function Exec Id: ${functionExecId}`);
-    await sleep(3000);
-    context.log('Finished!!!');
 }
 
 app.cosmosDB('cosmosDBTrigger1', {

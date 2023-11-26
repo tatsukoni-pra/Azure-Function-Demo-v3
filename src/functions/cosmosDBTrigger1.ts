@@ -59,7 +59,7 @@ process.on('uncaughtException', function(err) {
 export async function cosmosDBTrigger1(documents: unknown[], context: InvocationContext): Promise<void> {
     globalContext = context;
     try {
-        const functionVersion = "v3-17";
+        const functionVersion = "v3-18";
         const functionExecId = generateRandomNumber().toString();
         const documentsCount = documents.length;
         if (documentsCount === 0) {

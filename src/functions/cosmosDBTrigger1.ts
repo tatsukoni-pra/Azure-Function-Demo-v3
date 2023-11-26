@@ -23,16 +23,16 @@ process.on('SIGKILL', async () => {
   process.exit(0);
 });
 
-process.on('SIGTERM', async () => {
-  if (globalContext) {
-    globalContext.log('処理が中断されました。');
-    // ここにクリーンアップ処理を追加します。
-    // 例: データベースのクローズ、ファイルの保存など
-  }
+// process.on('SIGTERM', async () => {
+//   if (globalContext) {
+//     globalContext.log('処理が中断されました。');
+//     // ここにクリーンアップ処理を追加します。
+//     // 例: データベースのクローズ、ファイルの保存など
+//   }
 
-  // 必要なクリーンアップ処理が完了したら、プロセスを終了します。
-  process.exit(0);
-});
+//   // 必要なクリーンアップ処理が完了したら、プロセスを終了します。
+//   process.exit(0);
+// });
 
 export async function cosmosDBTrigger1(documents: unknown[], context: InvocationContext): Promise<void> {
     globalContext = context;

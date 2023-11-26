@@ -13,42 +13,53 @@ const generateRandomNumber: () => number = () => {
 }
 
 process.on('SIGTERM', async () => {
-  if (globalContext) {
-    globalContext.log('処理が途中終了されました。');
-    // ここにクリーンアップ処理を追加します。
-    // 例: データベースのクローズ、ファイルの保存など
-  }
+    if (globalContext) {
+        globalContext.log('処理が途中終了されました。');
+        // ここにクリーンアップ処理を追加します。
+        // 例: データベースのクローズ、ファイルの保存など
+    }
 
-  // 必要なクリーンアップ処理が完了したら、プロセスを終了します。
-  process.exit(0);
+    // 必要なクリーンアップ処理が完了したら、プロセスを終了します。
+    process.exit(0);
 });
 
 process.on('SIGINT', async () => {
-  if (globalContext) {
-    globalContext.log('処理が中断されました。');
-    // ここにクリーンアップ処理を追加します。
-    // 例: データベースのクローズ、ファイルの保存など
-  }
+    if (globalContext) {
+        globalContext.log('処理が中断されました。');
+        // ここにクリーンアップ処理を追加します。
+        // 例: データベースのクローズ、ファイルの保存など
+    }
 
-  // 必要なクリーンアップ処理が完了したら、プロセスを終了します。
-  process.exit(0);
+    // 必要なクリーンアップ処理が完了したら、プロセスを終了します。
+    process.exit(0);
 });
 
 process.on('exit', async () => {
-  if (globalContext) {
-    globalContext.log('処理がexitされました。');
-    // ここにクリーンアップ処理を追加します。
-    // 例: データベースのクローズ、ファイルの保存など
-  }
+    if (globalContext) {
+        globalContext.log('処理がexitされました。');
+        // ここにクリーンアップ処理を追加します。
+        // 例: データベースのクローズ、ファイルの保存など
+    }
 
-  // 必要なクリーンアップ処理が完了したら、プロセスを終了します。
-  process.exit(0);
+    // 必要なクリーンアップ処理が完了したら、プロセスを終了します。
+    process.exit(0);
+});
+
+process.on('uncaughtException', function(err) {
+    if (globalContext) {
+        globalContext.log('処理が異常終了されました。');
+        // ここにクリーンアップ処理を追加します。
+        // 例: データベースのクローズ、ファイルの保存など
+    }
+
+    // 必要なクリーンアップ処理が完了したら、プロセスを終了します。
+    process.exit(0);
 });
 
 export async function cosmosDBTrigger1(documents: unknown[], context: InvocationContext): Promise<void> {
     globalContext = context;
     try {
-        const functionVersion = "v3-16";
+        const functionVersion = "v3-17";
         const functionExecId = generateRandomNumber().toString();
         const documentsCount = documents.length;
         if (documentsCount === 0) {

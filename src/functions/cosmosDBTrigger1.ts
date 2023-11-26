@@ -26,7 +26,7 @@ process.on('SIGTERM', async () => {
 export async function cosmosDBTrigger1(documents: unknown[], context: InvocationContext): Promise<void> {
     globalContext = context;
     try {
-        const functionVersion = "v3-15";
+        const functionVersion = "v3-16";
         const functionExecId = generateRandomNumber().toString();
         const documentsCount = documents.length;
         if (documentsCount === 0) {

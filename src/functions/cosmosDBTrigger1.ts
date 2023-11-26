@@ -45,7 +45,7 @@ process.on('exit', async () => {
     process.exit(0);
 });
 
-process.on('uncaughtException', function(err) {
+process.on('uncaughtException', async () => {
     if (globalContext) {
         globalContext.log('処理が異常終了されました。');
         // ここにクリーンアップ処理を追加します。

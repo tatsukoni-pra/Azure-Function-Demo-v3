@@ -73,7 +73,7 @@ export async function cosmosDBTrigger1(documents: unknown[], context: Invocation
     globalContext = context;
 
     try {
-        const functionVersion = "v3-22";
+        const functionVersion = "v3-23";
         const functionExecId = generateRandomNumber().toString();
         const documentsCount = documents.length;
         if (documentsCount === 0) {
